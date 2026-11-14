@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRITTY VISIONS - 1=60DH 3=140DH Livraison Gratuit</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#ececec}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:#000;color:#fff;font-weight:900;position:sticky;top:0;z-index:99}
+header span{color:#ff2e63}
+.offer{background:#ff2e63;color:#fff;text-align:center;padding:12px 10px;font-weight:800;font-size:14px}
+.offer b{background:#fff;color:#ff2e63;padding:2px 8px;border-radius:10px}
+.stage{max-width:1150px;margin:15px auto;padding:0 15px}
+.rack{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.item{width:150px;text-align:center;cursor:pointer;transition:.3s}
+.item:hover{transform:scale(1.12)}
+.thumb{width:150px;height:150px;border-radius:14px;background-size:600% 600%;background-repeat:no-repeat;border:2px solid #fff;box-shadow:0 10px 20px rgba(0,0,0,.2)}
+.item p{font-size:11px;font-weight:800;margin-top:8px;line-height:1.4}
+.item p b{color:#ff2e63}
+#product{display:none;max-width:900px;margin:20px auto;text-align:center;background:#fff;padding:22px;border-radius:16px}
+.big{width:320px;height:320px;margin:0 auto;border-radius:16px;background-size:600% 600%;background-repeat:no-repeat;box-shadow:0 15px 30px rgba(0,0,0,.2)}
+.pack{display:flex;gap:10px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.pack div{border:2px solid #ddd;border-radius:14px;padding:13px;cursor:pointer;min-width:150px;background:#fff}
+.pack div.on{border-color:#000;background:#000;color:#fff}
+.pack div small{opacity:.7}
+.order{background:#25D366;color:#fff;border:none;padding:15px;border-radius:30px;font-weight:900;width:90%;max-width:380px;cursor:pointer;font-size:15px;margin:10px auto;display:block}
+.back{cursor:pointer;text-decoration:underline;margin-top:12px;font-size:13px;color:#555}
+footer{background:#000;color:#fff;text-align:center;padding:15px;font-size:12px;margin-top:30px}
+</style>
+</head>
+<body>
+<header><div>GRITTY <span>VISIONS</span></div><div>🛒 (<span id="cartN">0</span>)</div></header>
+<div class="offer">🔥 1 BONNET = <b>60 DH</b> | 3 BONNETS = <b>140 DH</b> | 🚚 LIVRAISON GRATUIT</div>
+
+<div class="stage" id="home"><div class="rack" id="rack"></div><p style="text-align:center;color:#888;margin:15px;font-size:12px">CLIQUER 3LA BONNET BACH TCHOFIH KBIR</p></div>
+
+<div id="product">
+<h2 id="pName"></h2>
+<p id="pPrice" style="color:#666;margin:6px 0"></p>
+<div class="big" id="big"></div>
+<div class="pack">
+<div onclick="sel(1,this)" class="on"><b>1 BONNET</b><br><b>60 DH</b><br><small>Livraison Gratuit</small></div>
+<div onclick="sel(3,this)"><b>🔥 3 BONNETS</b><br><b>140 DH</b> <s>180 DH</s><br><small>Katwfer 40 DH + Livraison Gratuit</small></div>
+</div>
+<button class="order" onclick="orderW()">🟢 COMMANDER WHATSAPP - <span id="tot">60 DH</span></button>
+<div class="back" onclick="back()">← BACK TO COLLECTION</div>
+</div>
+<footer>GRITTY VISIONS • 1 = 60 DH | 3 = 140 DH | Livraison Gratuit partout au Maroc</footer>
+
+<script>
+const P=[
+ {n:"GRITTY - RED / WHITE", img:"bonnet1.jpg", x:"0%", y:"15%"},
+ {n:"GRITTY - PINK", img:"bonnet1.jpg", x:"80%", y:"15%"},
+ {n:"GRITTY - PINK LIGHT", img:"bonnet1.jpg", x:"0%", y:"45%"},
+ {n:"GRITTY - BLACK / WHITE", img:"bonnet1.jpg", x:"45%", y:"38%"},
+ {n:"GRITTY - RED / BLACK", img:"bonnet1.jpg", x:"85%", y:"50%"},
+ {n:"GRITTY - BLUE", img:"bonnet1.jpg", x:"45%", y:"60%"},
+ {n:"GRITTY - BLACK", img:"bonnet1.jpg", x:"0%", y:"70%"},
+ {n:"GRITTY - GREY", img:"bonnet1.jpg", x:"45%", y:"80%"},
+ {n:"SC LOGO", img:"bonnet2.jpg", x:"0%", y:"10%"},
+ {n:"BARBED WIRE", img:"bonnet2.jpg", x:"35%", y:"10%"},
+ {n:"SPIDER", img:"bonnet2.jpg", x:"65%", y:"10%"},
+ {n:"ALL WE NEED IS MONEY", img:"bonnet2.jpg", x:"35%", y:"30%"},
+ {n:"RICH MOB", img:"bonnet2.jpg", x:"0%", y:"50%"},
+ {n:"TOP TIER", img:"bonnet2.jpg", x:"35%", y:"70%"},
+ {n:"8 BALL", img:"bonnet2.jpg", x:"65%", y:"70%"},
+];
+let cur=0,qty=1;
+const rack=document.getElementById('rack');
+P.forEach((p,i)=>{let d=document.createElement('div');d.className='item';d.innerHTML=`<div class="thumb" style="background-image:url(${p.img});background-position:${p.x} ${p.y}"></div><p>${p.n}<br><b>60 DH</b></p>`;d.onclick=()=>openP(i);rack.appendChild(d)});
+function openP(i){cur=i;upd();document.getElementById('home').style.display='none';document.getElementById('product').style.display='block';}
+function upd(){let p=P[cur];document.getElementById('pName').innerText=p.n;document.getElementById('pPrice').innerText=qty==3?'140 DH - PACK 3 (au lieu 180 DH)':'60 DH - Livraison Gratuit';document.getElementById('tot').innerText=qty==3?'140 DH':'60 DH';let b=document.getElementById('big');b.style.backgroundImage=`url(${p.img})`;b.style.backgroundPosition=`${p.x} ${p.y}`;}
+function sel(q,el){qty=q;document.querySelectorAll('.pack div').forEach(d=>d.classList.remove('on'));el.classList.add('on');upd()}
+function orderW(){let t=qty==3?140:60;window.open(`https://wa.me/212600000000?text=${encodeURIComponent('Salam bghit '+qty+' bonnet '+P[cur].n+' - Total '+t+' DH - Livraison Gratuit')}`)}
+function back(){document.getElementById('product').style.display='none';document.getElementById('home').style.display='block'}
+</script>
+</body>
+</html>
